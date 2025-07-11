@@ -6,37 +6,142 @@
     <title>Document</title>
 </head>
 <body>
-   <button class="scissor" onclick="
-     
-     const randomNumber = Math.random();
-
-     let computerScore = '';
-
-     if (randomNumber >=0 && randomNumber <1/3){
-        computerScore = 'Scissor'        
-     }else if (randomNumber >1/3 && randomNumber <2/3){
-        computerScore = 'Rock'
-     }else {
-        computerScore = 'Paper'
-     }
-
-     let result = '';
-
-     if (computerScore ==='Rock'){
-        result = 'You Loose! Better luck next time.'
-     }else if (computerScore ==='Scissor'){
-        result ='Tie'
-     }else {
-        result = 'You Win! Congratulation'
-     }
-
-     alert(`You picked Scissor, Computer picked ${computerScore}. ${result}`)
-
-
+    <style>
     
-    
-    ">Scissor</button> 
-   <button class="paper">Paper</button> 
-   <button class="rock">Rock</button> 
+
+      button {
+         padding: 10px 20px;
+         font-size: 16px;
+         cursor: pointer;
+         margin: 10px;
+      }
+
+      button:hover {
+         background-color: #0056b3;
+         font-size: 28px;
+      }
+
+      #rock {
+         background-color: #ff5733; 
+         color: #fff; 
+      }
+
+      #paper {
+         background-color: #33ff57; 
+         color: #fff; 
+      }
+
+      #scissor {
+         background-color: #3357ff; 
+         color: #fff; 
+      }
+
+      #result {
+         font-size: 24px;
+         margin-top: 20px;
+      }
+
+      #rock, #paper, #scissor {
+         border: none;
+         border-radius: 5px;
+      }
+
+    </style>
+    <h1>Rock, Paper, Scissor</h1>
+   <button onclick="playGame('Rock')">Rock</button>
+
+   <button onclick="playGame('Paper')">Paper</button>
+
+   <button onclick="playGame('Scissor')">Scissor</button>
+   <button onclick="
+   score.wins = 0,
+   score.lose = 0,
+   score.tie = 0;
+   localStorage.removeItem('score');
+
+   ">Reset</button>
+
+   <script>
+      let score =JSON.parse(localStorage.getItem('score')) || {
+         wins : 0,
+         lose : 0,
+         tie : 0,
+      };
+   /*
+      if (score === 'null'){
+         score ={
+               wins : 0,
+               lose : 0,
+               tie : 0,
+         }
+      } */
+
+
+      function pickcomputersMove() {
+      const number = Math.random();
+
+      let computersMove  = ''; 
+
+      if (number >=0 && number <= 1/3){
+         computersMove  = 'Scissor';
+      }else if (number >=1/3 && number <= 2/3){
+         computersMove  = 'Rock';
+      }else {
+         computersMove  = 'Paper';
+      }
+      return computersMove;
+      }
+
+
+      function playGame(playerMove){
+            const computersMove  = pickcomputersMove();
+
+         let result ='';
+         if (playerMove ==='Scissor'){
+         if (computersMove  ==='Rock'){
+               result = 'You lose'
+         }else if (computersMove  ==='Paper'){
+               result = 'You win!'
+         }else {
+               result = 'Tie'
+         }
+      } else if (playerMove === 'Paper'){
+         
+         if (computersMove ==='Paper'){
+                  result = 'Tie'
+            } else if (computersMove ==='Rock'){
+                  result = 'You win!'
+
+         } else {
+                  result = 'You lose'
+         }
+      } else {
+            
+         if (computersMove === 'Rock') {
+               result = 'Tie';
+         }else if (computersMove === 'Scissor') {
+               result = 'You win!';
+         }else {
+               result = 'You lose'
+         }  
+      } 
+         
+         if (result ==='You win!'){
+               score.wins += 1;
+         }else if (result === 'You lose'){
+               score.lose +=1;
+         }else{
+               score.tie +=1;
+         }
+         localStorage.setItem('score',JSON.stringify(score));
+
+         alert (`You picked ${playerMove}, Computer picked ${computersMove}. ${result}
+         wins: ${score.wins} , lose: ${score.lose} & Ties: ${score.tie}`);
+   
+
+      }
+
+
+   </script>
 </body>
 </html>
